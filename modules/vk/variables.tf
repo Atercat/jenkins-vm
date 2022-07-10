@@ -4,7 +4,7 @@ variable "name" {
 }
 variable "flavor_name" {
     type = string
-    default = "Standard-2-4"
+    default = "Standard-2-2"
     description = "openstack flavor list"
 }
 variable "storage_size" {
