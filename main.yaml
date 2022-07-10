@@ -24,17 +24,16 @@
         content: "deb [signed-by={{ keyring }}] https://pkg.jenkins.io/debian-stable binary/"
         dest: /etc/apt/sources.list.d/jenkins.list
 
-    - name: Updating CA certificates
+    - name: Update all packages to the latest version
       apt:
-        name: ca-certificates
-        state: latest
-        update_cache: yes
+        upgrade: full
 
     - name: Installing JDK and Jenkins
       apt:
         name:
           - openjdk-11-jre
           - jenkins
+        update_cache: yes
 
     - name: Ensure the Jenkins service is started
       service:
