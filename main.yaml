@@ -8,16 +8,31 @@
         hostname: "{{ vm_ip }}"
         groups: jenkins
 
-- name: Waiting for the instance
+- name: Upgrade the instance
   hosts: jenkins
+  become: true
   gather_facts: false
   tasks:
     - name: Wait for the instance is reachable
       wait_for_connection:
 
+    - name: Gather facts for first time
+      setup:
+
+    - name: Update all packages to the latest version
+      apt:
+        update_cache: true
+        upgrade: full
+    
+    - name: Reboot the instance
+      reboot:
+
+    - name: Wait for the instance is reachable
+      wait_for_connection:
+
 - name: Installing Jenkins
   hosts: jenkins
-  become: yes
+  become: true
   vars:
     - keyring: /usr/share/keyrings/jenkins-keyring.asc
   tasks:
@@ -31,16 +46,12 @@
         content: "deb [signed-by={{ keyring }}] https://pkg.jenkins.io/debian-stable binary/"
         dest: /etc/apt/sources.list.d/jenkins.list
 
-    - name: Update all packages to the latest version
-      apt:
-        upgrade: full
-
     - name: Installing JDK and Jenkins
       apt:
         name:
           - openjdk-11-jre
           - jenkins
-        update_cache: yes
+        update_cache: true
 
     - name: Ensure the Jenkins service is started
       service:
