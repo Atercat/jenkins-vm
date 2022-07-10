@@ -8,6 +8,13 @@
         hostname: "{{ vm_ip }}"
         groups: jenkins
 
+- name: Waiting for the instance
+  hosts: jenkins
+  gather_facts: false
+  tasks:
+    - name: Wait for the instance is reachable
+      wait_for_connection:
+
 - name: Installing Jenkins
   hosts: jenkins
   become: yes
