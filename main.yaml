@@ -1,0 +1,37 @@
+---
+- name: Filling in the inventory
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Add build host
+      add_host:
+        hostname: "{{ vm_ip }}"
+        groups: jenkins
+
+- name: Installing Jenkins
+  hosts: jenkins
+  become: yes
+  vars:
+    - keyring: /usr/share/keyrings/jenkins-keyring.asc
+  tasks:
+    - name: Adding the Jenkins repo signing key
+      apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io.key
+        keyring: "{{ keyring }}"
+
+    - name: Adding the Jenkins repo
+      copy:
+        content: "deb [signed-by={{ keyring }}] https://pkg.jenkins.io/debian binary/"
+        dest: /etc/mine.conf
+
+    - name: Installing JDK and Jenkins
+      apt:
+        name:
+          - openjdk-11-jre
+          - jenkins
+        update_cache: yes
+
+    - name: Ensure the Jenkins service is started
+      service:
+        name: jenkins
+        state: started
