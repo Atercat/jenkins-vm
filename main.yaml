@@ -22,7 +22,7 @@
     - name: Adding the Jenkins repo
       copy:
         content: "deb [signed-by={{ keyring }}] https://pkg.jenkins.io/debian binary/"
-        dest: /etc/mine.conf
+        dest: /etc/apt/sources.list.d/jenkins.list
 
     - name: Installing JDK and Jenkins
       apt:
