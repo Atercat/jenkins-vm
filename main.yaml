@@ -57,3 +57,6 @@
       service:
         name: jenkins
         state: started
+
+    - debug:
+        msg: "Jenkins address: http://{{inventory_hostname}}:8080\nAdmin password: {{ lookup('file', '/var/lib/jenkins/secrets/initialAdminPassword') }}"
