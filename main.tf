@@ -4,6 +4,6 @@ module "vm" {
 }
 resource "null_resource" "playbook" {
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu -e 'vm_ip=${vm.ip}' main.yaml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu -e 'vm_ip=${module.vm.ip}' main.yaml"
   }
 }
