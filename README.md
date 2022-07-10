@@ -1,0 +1,1 @@
+The Terraform/Ansible script to prepare a virtual machine with Jenkins on VK Cloud Solutions.
