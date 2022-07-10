@@ -18,5 +18,5 @@ variable "image_id" {
 }
 variable "key_pair" {
     type = string
-    default = "aterc_ATERPC_-rsa"
+    default = "wsl"
 }

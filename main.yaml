@@ -7,7 +7,6 @@
       add_host:
         hostname: "{{ vm_ip }}"
         groups: jenkins
-        ansible_user: ubuntu
 
 - name: Installing Jenkins
   hosts: jenkins
@@ -16,9 +15,9 @@
     - keyring: /usr/share/keyrings/jenkins-keyring.asc
   tasks:
     - name: Adding the Jenkins repo signing key
-      apt_key:
+      get_url:
         url: https://pkg.jenkins.io/debian/jenkins.io.key
-        keyring: "{{ keyring }}"
+        dest: "{{ keyring }}"
 
     - name: Adding the Jenkins repo
       copy:
