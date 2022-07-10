@@ -7,6 +7,7 @@
       add_host:
         hostname: "{{ vm_ip }}"
         groups: jenkins
+        ansible_user: ubuntu
 
 - name: Installing Jenkins
   hosts: jenkins
